@@ -26,24 +26,24 @@ This example demonstrates how to use RobotFramework together with [AppiumLibrary
 
 4. Run test:
 
-    Android example:
+    Android Physical Device example:
     ```
-    PYTHONPATH=$PYTHONPATH:. robot \
-      --variable PLATFORM:Android \
-      --variable VERSION:14.0 \
-      --variable DEVICE:Pixel.* \
-      --variable APP:https://testingbot.com/appium/sample.apk \
-      test.robot
+    PYTHONPATH=$PYTHONPATH:. robot test_android_physical.robot
     ```
 
-    iOS example:
+    Android Emulator example:
     ```
-    PYTHONPATH=$PYTHONPATH:. robot \
-      --variable PLATFORM:iOS \
-      --variable VERSION:17.0 \
-      --variable DEVICE:iPhone.* \
-      --variable APP:https://testingbot.com/appium/sample.ipa \
-      test.robot
+    PYTHONPATH=$PYTHONPATH:. robot test_android_emulator.robot
+    ```
+
+    iOS Physical Device example:
+    ```
+    PYTHONPATH=$PYTHONPATH:. robot test_ios_physical.robot
+    ```
+
+    iOS Simulator example:
+    ```
+    PYTHONPATH=$PYTHONPATH:. robot test_ios_simulator.robot
     ```
 
 
