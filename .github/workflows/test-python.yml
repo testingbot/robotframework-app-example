@@ -1,0 +1,43 @@
+name: Validate RobotFramework App Example
+
+on:
+  push:
+    branches:
+      - main
+    paths-ignore:
+      - '**.md'
+  pull_request:
+    paths-ignore:
+      - '**.md'
+jobs:
+  test-robotframework:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+      - run: |
+          PYTHONPATH=$PYTHONPATH:. robot \
+            --variable PLATFORM:Android \
+            --variable VERSION:14.0 \
+            --variable DEVICE:Pixel.* \
+            --variable APP:https://testingbot.com/appium/sample.apk \
+            test.robot
+        env:
+          TB_KEY: ${{ secrets.TB_KEY }}
+          TB_SECRET: ${{ secrets.TB_SECRET }}
+      - name: Upload Robot Framework reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: robot-reports
+          path: |
+            log.html
+            report.html
+            output.xml
